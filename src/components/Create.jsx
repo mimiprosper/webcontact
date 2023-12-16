@@ -13,15 +13,52 @@ function Create() {
   const [name, setname] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
+  const [phoneerror, setPhoneError] = useState(null);
+  const [username, setUsername] = useState(null);
 
- 
-// regex implementation
+  // regex implementation
+  const validateEmail = () => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      setError("Email must be a valid address, e.g. me@mydomain.com");
+    } else {
+      setError("");
+    }
+  };
 
- 
+  const validatePhone = () => {
+    const phoneRegex = /^\d{11}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneError(
+        "Telephone must be a valid 9ja telephone number (11 digits)"
+      );
+    } else {
+      setPhoneError("");
+    }
+  };
 
-// useeffect for regex implementation
+  const validateUsername = () => {
+    const usernameRedex = /^[a-z\d]{5,12}$/i;
+    if (!usernameRedex.test(name)) {
+      setUsername("Username must be  and contain 5 - 12 characters");
+    } else {
+      setUsername("");
+    }
+  };
 
+  // useEffect for fetching a value
+  useEffect(() => {
+    validateEmail();
+  });
 
+  useEffect(() => {
+    validatePhone();
+  });
+
+  useEffect(() => {
+    validateUsername();
+  });
 
   // Using useNavigation for redirecting to pages
   let history = useNavigate();
@@ -62,7 +99,7 @@ function Create() {
             placeholder="Enter Name"
             required
           />
-          {/* <h6>{username}</h6> */}
+          <h6>{username}</h6>
         </Form.Group>
 
         {/* Fetching a value from input textfirld in
@@ -74,7 +111,7 @@ function Create() {
             placeholder="Enter Phone"
             required
           />
-          {/* <h6>{phoneerror}</h6> */}
+          <h6>{phoneerror}</h6>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicAge">
@@ -84,7 +121,7 @@ function Create() {
             placeholder="Enter Email"
             required
           />
-          {/* <h6>{error}</h6> */}
+          <h6>{error}</h6>
         </Form.Group>
 
         {/* handing a onclick event in button for

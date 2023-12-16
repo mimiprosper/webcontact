@@ -47,7 +47,7 @@ function Edit() {
     }
   };
 
-  //regex implementation using usestate
+  //regex implementation using usestate to fetch values
   useEffect(() => {
     validateEmail();
   });
