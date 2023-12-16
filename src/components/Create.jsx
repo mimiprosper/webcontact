@@ -47,7 +47,7 @@ function Create() {
     }
   };
 
-  // useEffect for fetching a value
+  // useEffect for fetching a values
   useEffect(() => {
     validateEmail();
   });
