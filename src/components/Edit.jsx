@@ -13,16 +13,53 @@ function Edit() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [id, setid] = useState("");
-  
+  const [error, setError] = useState(null);
+  const [phoneerror, setPhoneError] = useState(null);
+  const [username, setUsername] = useState(null);
 
-  //adding regex
+  // regex implementation
+  const validateEmail = () => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      setError("Email must be a valid address, e.g. me@mydomain.com");
+    } else {
+      setError("");
+    }
+  };
 
-  
+  const validatePhone = () => {
+    const phoneRegex = /^\d{11}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneError(
+        "Telephone must be a valid 9ja telephone number (11 digits)"
+      );
+    } else {
+      setPhoneError("");
+    }
+  };
 
+  const validateUsername = () => {
+    const usernameRedex = /^[a-z\d]{5,12}$/i;
+    if (!usernameRedex.test(name)) {
+      setUsername("Username must be  and contain 5 - 12 characters");
+    } else {
+      setUsername("");
+    }
+  };
 
-  // useeffect for the regex
+  //regex implementation using usestate
+  useEffect(() => {
+    validateEmail();
+  });
 
-  
+  useEffect(() => {
+    validatePhone();
+  });
+
+  useEffect(() => {
+    validateUsername();
+  });
+
   // Used for navigation with logic in javascript
   let history = useNavigate();
 
@@ -50,7 +87,7 @@ function Edit() {
     // textfield and replacing it from
     // existing for updation
     a.Name = name;
-  
+    a.Age = phone;
     a.Email = email;
     a.Phone = phone;
 
@@ -67,9 +104,6 @@ function Edit() {
     setid(localStorage.getItem("id"));
   }, []);
 
-
-
-
   return (
     <div>
       <Form className="d-grid gap-2" style={{ margin: "5rem" }}>
@@ -81,7 +115,7 @@ function Edit() {
             type="text"
             placeholder="Enter Name"
           />
-          {/* <h6>{username}</h6> */}
+          <h6>{username}</h6>
         </Form.Group>
 
         {/* setting a phone from the input textfiled */}
@@ -92,7 +126,7 @@ function Edit() {
             type="number"
             placeholder="phone"
           />
-          {/* <h6>{phoneerror}</h6> */}
+          <h6>{phoneerror}</h6>
         </Form.Group>
 
         {/* setting an email from the input textfiled */}
@@ -103,7 +137,7 @@ function Edit() {
             type="text"
             placeholder="email"
           />
-          {/* <h6>{error}</h6> */}
+          <h6>{error}</h6>
         </Form.Group>
 
         {/* Hadinling an onclick event 
